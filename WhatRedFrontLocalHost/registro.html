@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuarios</title>
+    <link rel="stylesheet" href="registro_styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>WhatRed</h1>
+    </div>
+    <div class="container">
+        <h1>Registro de Usuario</h1>
+        <form id="registrationForm">
+            <label for="nombre_completo">Nombre Completo:</label>
+            <input type="text" id="nombre_completo" name="nombre_completo" required>
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" name="usuario" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <label for="rol">Rol:</label>
+            <select id="rol" name="rol">
+                <option value="usuario">Usuario</option>
+                <option value="administrador">Administrador</option>
+            </select>
+            <button type="submit">Registrar Usuario</button>
+        </form>
+        <div class="back-button">
+            <button onclick="goBack()">Regresar</button>
+        </div>
+        <div id="message"></div>
+    </div>
+    <script src="registroScript.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

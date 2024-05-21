@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Usuario</title>
+    <link rel="stylesheet" href="user_styles.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>WhatRed</h1>
+        <button onclick="logout()">Cerrar Sesión</button>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Lista de Usuarios</h2>
+            <ul id="userList"></ul>
+            
+        </div>
+        <div class="main-content">
+            
+            <h1 id="userInfo"></h1>
+            <h2>Crear Mensaje</h2>
+            <form id="messageForm">
+                <label for="contenido">Contenido del Mensaje:</label>
+                <textarea id="contenido" name="contenido" required></textarea>
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+            <div id="message"></div>
+            <h2>Usuarios Seguidos</h2>
+            <ul id="followingList"></ul>
+            <button id="followAllButton">Seguir a Todos</button>
+        </div>
+    </div>
+    <script src="messageScript.js"></script>
+    <script src="usuariosScript.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('username');
+            window.location.href = 'index5.html';
+        }
+
+        // Obtener el nombre del usuario almacenado en localStorage
+        const username = localStorage.getItem('username');
+        if (username) {
+            document.querySelector("h1").textContent = `Bienvenido, ${username}`;
+        }
+    </script>
+</body>
+
+</html>

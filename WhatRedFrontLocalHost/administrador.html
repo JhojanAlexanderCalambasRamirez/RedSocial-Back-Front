@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Administrador</title>
+    <link rel="stylesheet" href="admin_styles.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>WhatRed</h1>
+        <button onclick="logout()">Cerrar Sesión</button>
+    </div>
+    <div class="container">
+        <div class="center">
+            <div class="sidebar">
+                
+            </div>
+            <div class="main-content">
+                <h2>Funciones del Administrador</h2>
+                <div class="description">
+                    <p>Aquí puedes crear nuevos usuarios y gestionar la red social.</p>
+                    <button onclick="redirectToRegistro()">Registrar Nuevo Usuario</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function logout() {
+            // Eliminar datos de usuario almacenados en el localStorage
+            localStorage.removeItem('username');
+            // Redireccionar a la página de inicio
+            window.location.href = 'index5.html';
+        }
+
+        function redirectToRegistro() {
+            // Redireccionar a la página de registro de usuario
+            window.location.href = 'registro.html';
+        }
+
+        // Obtener el nombre del usuario almacenado en localStorage
+        const username = localStorage.getItem('username');
+        if (username) {
+            document.querySelector("h1").textContent = `WhatRed - Admin - Bienvenido, ${username}`;
+        }
+    </script>
+</body>
+
+</html>

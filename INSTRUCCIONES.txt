@@ -1,0 +1,199 @@
+database RedesSociales;
+
+mysql> TABLE usuarios (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nombre_completo VARCHAR(255),
+    ->     usuario VARCHAR(100) UNIQUE,
+    ->     password VARCHAR(255),
+    ->     rol ENUM('administrador', 'usuario')
+    -> );
+
+mysql> TABLE mensajes (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     usuario_id INT,
+    ->     contenido TEXT,
+    ->     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    -> );
+
+mysql> TABLE relaciones (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     usuarioP_id INT,
+    ->     usuarioS_id INT,
+    ->     FOREIGN KEY (usuarioP_id) REFERENCES usuarios(id),
+    ->     FOREIGN KEY (usuarioS_id) REFERENCES usuarios(id)
+    -> );
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CONTEXTO;
+
+Se requiere desarrollar una aplicación relacionada con redes sociales que cumpla con los siguientes requerimientos:
+
+1.
+La aplicación tendrá dos tipo de usuarios: 
+administrador y usuario de la red social
+
+2.
+La aplicación deberá permitir validar las credenciales de los usuarios para el ingreso a la aplicación. 
+Si las credenciales no son válidas deberá entregar un mensaje de error y no dejar avanzar.
+
+3.
+La aplicación deberá permitir a los usuarios de la red social la creación de mensajes. 
+La información asociada a los mensajes será la siguiente: id, usuario que genera el mensaje, contenido del mensaje.
+
+4.
+La aplicación le permitirá a los usuarios de la red social ver todos los usuarios que existen en la red social.
+5.
+La aplicación deberá permitir a los usuarios de la red social seguir a otros usuarios. 
+Para ello se crearán relaciones que tendrán a siguiente información; 
+id, usuarioP y usuarioS, en donde usuarioP es el usuario principal y usuarioS es el usuario seguidor.
+
+6.
+La aplicación les permitirá a los usuarios de la red social 
+ver la lista de usuarios a los que sigue y los mensajes que esos usuarios han creado.
+
+7.
+La aplicación deberá permitir al usuario administrador la creación de los usuarios que pertenecerán a la red social. 
+La información asociada a los usuarios será: nombre completo, usuario, password y rol. El rol indicará si el usuario es administrador o usuario de la red social.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Contenido:
+
+Hay 3 carpetas, WhatRedBackend es donde estaran los 3 microservicios, cada microserivico contiene un app.js, un config.js y tienen 3 subcarpetas llamadas "controllers, models y routers".
+
+Ejemplo de la distribucion de los 3 microservicios.
+
+authMicroservice/                  
+│
+├── controllers/
+│   └── authController.js
+│
+├── models/
+│   └── userModel.js
+│
+├── routes/
+│   └── authRoutes.js
+│
+├── app.js
+└── config.js
+
+messageMicroservice/
+│
+├── controllers/
+│   └── messageController.js
+│
+├── models/
+│   └── messageModel.js
+│
+├── routes/
+│   └── messageRoutes.js
+│
+├── app.js
+└── config.js
+
+relationshipMicroservice/
+│
+├── controllers/
+│   └── relationshipController.js
+│
+├── models/
+│   └── relationshipModel.js
+│
+├── routes/
+│   └── relationshipRoutes.js
+│
+├── app.js
+└── config.js
+
+
+----------------------------Explicacion del "app.js";-----------------------------------------
+
+Importa Módulos Necesarios:
+
+express para crear el servidor web.
+morgan para registrar solicitudes HTTP.
+cors para permitir solicitudes de diferentes orígenes (CORS).
+authRoutes para manejar las rutas de autenticación.
+Configura la Aplicación Express:
+
+Utiliza express.json() para manejar JSON en las solicitudes.
+Usa morgan('dev') para registrar solicitudes HTTP en la consola.
+Aplica cors() para permitir CORS.
+Define Rutas:
+
+Asigna las rutas de autenticación a la ruta base /auth.
+Inicia el Servidor:
+
+El servidor escucha en el puerto 3001 y muestra un mensaje de confirmación en la consola.
+Exporta la Aplicación:
+
+----------------------------------IMPORTANTE---------------------------------------------------
+
+app.listen(3001, () => {
+    console.log('User and "Auth" service listening on port 3001');
+});
+
+el puerto se asigna como uno quiera, en este caso se usa el "3001", "3002", "3003".
+para los 3 microservicios.
+
+authMicroservice = 3001
+messageMicroservice = 3002
+relationshipMicroservice = 3003
+
+------------------------------Explicacion del "config.js"---------------------------------------------
+
+Descripción Resumida del Código
+Este código configura un pool de conexiones a una base de datos MySQL usando el módulo mysql2/promise en Node.js.
+
+Importa el Módulo MySQL:
+
+const mysql = require('mysql2/promise');: Importa el módulo que proporciona una API basada en Promesas para MySQL.
+Crea un Pool de Conexiones:
+
+host: Especifica el servidor de la base de datos (localhost).
+user: Usuario para conectarse a la base de datos (root).
+password: Contraseña del usuario (root).
+database: Nombre de la base de datos (RedesSociales).
+connectionLimit: Máximo número de conexiones en el pool (10).
+Exporta el Pool:
+
+module.exports = { pool };: Exporta el pool de conexiones para ser utilizado en otros módulos.
+
+-----------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------Ejecucuión---------------------------------------------------------
+
+Instalar en cada carpeta de los tres microservicios "npm init -yes" "npm install mysql mysql2 cors express".
+
+El backend "WhatRedBackend", funciona para ambos frontend; 
+
+- WhatRedFrontLocalHost
+- WhatRedFrontServidorUbuntu.
+
+------------------------------------------localhost----------------------------------------------------------------
+
+WhatRedFrontLocalHost = se ejecuta en XAMPP y en el shell de MySQL se deberian de crear las tablas
+de la base de datos "RedesSociales", una vez creada la database se procede dentro de cada microservicio ejecutar;
+"node app.js".
+
+Despues de corroborar de que los microservicios funcionan se procede a abrir la carpeta WhatRedFrontLocalHost y abrir el index5.html.
+
+Tener en cuenta que XAMPP siempre tiene que estar ejecutando MySQL y APACHE.
+
+----------------------------------------ServidorUbuntu o cualquier otra red------------------------------------------------
+
+Crear la database en MySQL, una vez creada la database se procede dentro de cada microservicio ejecutar;
+"node app.js".
+
+Despues de corroborar de que los microservicios funcionan se procede a abrir la carpeta WhatRedFrontServidorUbuntu y abrir el index5.html.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Usuarios para ingresar.
+
+Rol usuario: usuario2
+Password: pass456
+
+Rol administrador: admin
+Password: admin123

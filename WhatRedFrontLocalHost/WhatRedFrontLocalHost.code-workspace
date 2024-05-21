@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../WhatRedFrontServidorUbuntu"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "WhatRedFrontLocalHost"
+	}
+}
